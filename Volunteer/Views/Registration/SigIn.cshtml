@@ -1,0 +1,45 @@
+﻿@model ApplicationUser
+<div class="containerRegistration" style="">
+    <form method="post" asp-controller="Registration" asp-action="SigIn">
+        <img src="/images/flags-of-ukraine.jpg" style="width:100%; height:170px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row" style="margin:0px;">
+                    <form>
+                        <p>Виберіть роль користувача на сайті:</p><br>
+                        <label for="Volunteer">
+                            <input type="radio" id="Volunteer" name="role" value="1">
+                            Волонтер
+                        </label>
+                        <label for="Soldier">
+                            <input type="radio" id="Soldier" name="role" value="2">
+                            Військовий
+                        </label>
+                    </form>
+
+                </div>
+                <div class="row" style="padding:10px; margin-top:5px!important;">
+                    <div class="col-md-12">
+                        <label>Введіть ім'я</label>
+                        <input type="text" class="form-control" asp-for="FirstName"/>
+                        <label>Введіть прізвище</label>
+                        <input type="text" class="form-control" asp-for="SecondName"/>
+                        <label>Введіть e-mail</label>
+                        <input type="email" class="form-control" asp-for="Email" />
+                        <label>Введіть пароль</label>
+                        <input type="password" class="form-control" name="Password"/>
+                        <label>Повторіть пароль</label>
+                        <input type="password" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top:5px!important;">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-info" style="left: 150px; position: relative; margin-bottom: 10px; border-radius: 5px;">
+                            Зарєструватись
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

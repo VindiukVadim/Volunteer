@@ -15,6 +15,13 @@ namespace Volunteer.Controllers
 
         public IActionResult Index()
         {
+            var test = new VolunteerUser();
+            test.Id = Guid.NewGuid();
+            test.Email = "vvindiuk@gmail.com";
+            test.FirstName= "Test";
+
+
+
             return View();
         }
 

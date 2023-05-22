@@ -1,0 +1,25 @@
+﻿@{
+    var controller = TempData["Controller"];
+    var method = TempData["Method"];
+}
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <p>Ви дійстно бажаете видалити?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+
+                <form method="post" asp-controller=@controller asp-action=@method style="justify-content:center; display:flex">
+                    <button name="id" id="comfirmDelete" type="submit" class="btn btn-danger" value="">Видалити</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

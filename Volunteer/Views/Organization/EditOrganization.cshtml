@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@model Organization
+
+<h2>Редагування організації</h2>
+<hr>
+<form method="post" asp-asp-controller="Organization" asp-action="EditOrganization">
+    <input hidden value=@Model.Id asp-for=@Model.Id>
+    <label for="Name"></label>
+    <input id="Name" class="form-control" asp-for="Name">
+    <label for="Desc"></label>
+    <textarea id="Desc" class="form-control" asp-for="Description"></textarea>
+    <p>Склад волонтерської організації</p>
+    @if (Model.VolunteerUsers != null)
+    {
+
+        @foreach (var user in Model.VolunteerUsers)
+        {
+            <input type="radio" name="users" value="@user.FirstName @user.SecondName" @(Model.VolunteerUsers.Contains(user) ? "checked=\"checked\"" : "") />
+            @user.FirstName @user.SecondName <br />
+        }
+    }
+    else
+    {
+        <p>Організація пуста</p>
+        <td><button id="addVolunteer" data-myvalue="@Model.Id" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" name="addVolunteer" class="btn btn-sm btn-danger" value="@Model.Id">Додати волонтерів</button></td>
+    }
+
+
+    <button type="submit" class="btn btn-success">Зберегти</button>
+</form>
+@Html.Partial("_ModalAddVolunteer")
+<script>
+    let Addbuttompage = document.querySelector("#addVolunteer");
+Addbuttompage.addEventListener("click", () => {
+	let Addbuttonmodal = document.querySelector('#comfirmAdd');
+	Addbuttonmodal.setAttribute('value', Addbuttompage.getAttribute("data-myvalue"));
+});
+</script>

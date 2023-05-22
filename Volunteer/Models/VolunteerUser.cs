@@ -7,7 +7,9 @@ namespace Volunteer.Models
         
         public DateTime DateOfBirth { get; set; }
         public string City { get; set; }    
-        public string About { get; set; }   
+        public string About { get; set; }
+        public Guid? OrganizationId { get; set; }
+        public Organization Organization { get; set; }
     }
 
 }

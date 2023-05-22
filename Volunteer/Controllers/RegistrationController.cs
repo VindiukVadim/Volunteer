@@ -6,7 +6,7 @@ using System.Text.Encodings.Web;
 using System.Text;
 using Volunteer.Models;
 using System.Data;
-using Volunteer.Migrations;
+using Volunteer.Data;
 
 namespace Volunteer.Controllers
 {
@@ -14,10 +14,12 @@ namespace Volunteer.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public RegistrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly ApplicationDbContext _context;
+        public RegistrationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
         public async Task<IActionResult> SigIn(ApplicationUser model, int role, string Password)
         {
@@ -32,6 +34,21 @@ namespace Volunteer.Controllers
                     {
                         user.EmailConfirmed = true;
                         await _userManager.UpdateAsync(user);
+                        await _userManager.AddToRoleAsync(user, "Volunteer");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                if (role == 2)
+                {
+                    var user = new SoldierUser { FirstName = model.FirstName, SecondName = model.SecondName, Email = model.Email, UserName = model.Email };
+
+                    var result = await _userManager.CreateAsync(user, Password);
+                    if (result.Succeeded)
+                    {
+                        user.EmailConfirmed = true;
+                        await _userManager.UpdateAsync(user);
+                        await _userManager.AddToRoleAsync(user, "Soldier");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home");
                     }
@@ -39,6 +56,7 @@ namespace Volunteer.Controllers
             }
             else
             {
+                //сообщать об ошибке
                 return View();
             }
             return View();
@@ -50,7 +68,7 @@ namespace Volunteer.Controllers
             {
                 var result = await _signInManager.PasswordSignInAsync(email, password, rememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "VolunteerAcount");
             }
             else
             {
@@ -64,5 +82,7 @@ namespace Volunteer.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }

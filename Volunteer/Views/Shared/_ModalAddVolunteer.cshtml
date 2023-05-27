@@ -1,9 +1,7 @@
 ﻿@{
-    var controller = TempData["ControllerAdd"];
-    var method = TempData["MethodAdd"];
-    var alllistVolunteer = ViewBag.ListOfVolunteer;
-    var currentVolunteer = ViewBag.CurrentVolonteer;
-    var orgId = TempData["IdOrg"];
+    var controller = TempData["Controller"];
+    var method = TempData["Method"];
+    var list = ViewBag.ListOfVolunteer;
 }
 
 
@@ -12,31 +10,23 @@
         <div class="modal-content">
             <div class="modal-header">
             </div>
-            <form method="post" asp-controller=@controller asp-action=@method>
-                <div class="modal-body">
+            <form method="post" asp-controller=@controller asp-action=@method style="justify-content:center; display:flex">
+            <div class="modal-body">
 
-                    @foreach (var user in alllistVolunteer)
-                    {
-                        if (currentVolunteer.Contains(user))
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                        <input hidden name="organizationId" id="organizationId" value="@orgId"></input>
-                        <input type="checkbox" name="addlistUserId" id="addlistUserId" value="@user.Id" @*@(currentVolunteer.Contains(user) ? "checked=\" checked\""*@ : "" ) />
-                        @user.FirstName @user.SecondName <br />
-                        }
-                        
-                    }
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                @foreach (var user in list)
+                {
+                        <input type="radio" name="addlistUserId" id="addlistUserId" value="@user.Id" @*@(Model.VolunteerUsers.Contains(user)*@ ? "checked=\" checked\"" : "" ) />
+                    @user.FirstName @user.SecondName <br />
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
 
-                    <button id="comfirmAdd" type="submit" class="btn btn-danger" value="">Змінити</button>
+                
+                    <button id="comfirmAdd" type="submit" class="btn btn-danger" value="">Додати</button>
+                
 
-
-                </div>
+            </div>
             </form>
         </div>
     </div>

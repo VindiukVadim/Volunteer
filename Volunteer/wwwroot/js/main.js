@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			let deletebuttonmodal = document.querySelector('#comfirmDelete');
 			deletebuttonmodal.setAttribute('value', elem.getAttribute("data-myvalue"));
 		})
-	});
+	})
+
 
 });
 

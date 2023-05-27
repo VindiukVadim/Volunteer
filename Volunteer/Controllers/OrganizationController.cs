@@ -122,13 +122,12 @@ namespace Volunteer.Controllers
                 var newUser = _context.VolunteerUsers.FirstOrDefault(u => u.Id == item);
                 volunteerUsers.Add(newUser);
             }
-        
-
-            updateOrg.Name = organization.Name;
-            updateOrg.Description = organization.Description;
+            var volunteersToAdd = currentVolunteers.Except(volunteerUsers).ToList();
+            updateOrg.VolunteerUsers.Clear();
+            updateOrg.VolunteerUsers.AddRange(volunteersToAdd);
             _context.Organizations.Update(updateOrg);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewAllInformationCompositionOrganization", new RouteValueDictionary { { "Id", organizationId } });
         }
 
         //public void AddVolunteersToOrganization(Organization organization, List<Guid> addlistUserId)

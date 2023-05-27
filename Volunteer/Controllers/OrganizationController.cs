@@ -22,6 +22,7 @@ namespace Volunteer.Controllers
             var adminID = _context.VolunteerUsers.FirstOrDefault(u => u.UserName == administrator);
             var listOrg = _context.Organizations.Where(o => o.MainVolunteerId == adminID.Id).ToList();
             return View(listOrg);
+
         }
 
         public ActionResult CreateOrganization()

@@ -15,6 +15,7 @@ namespace Volunteer.Data
         public DbSet<VolunteerUser> VolunteerUsers { get; set; }
         public DbSet<SoldierUser> SoldierUsers { get; set; }    
         public DbSet<Organization> Organizations { get; set; }
+        public DbSet<MilitaryUnit> MilitaryUnits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

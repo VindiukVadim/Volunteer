@@ -87,7 +87,7 @@ namespace Volunteer.Controllers
             TempData["ControllerAdd"] = "Organization";
             TempData["MethodAdd"] = "AddVolunteersToOrganization";
             TempData["ControllerRemove"] = "Organization";
-            TempData["MethodRemove"] = "RemoveVolunteersToOrganization";
+            TempData["MethodRemove"] = "RemoveVolunteersFromOrganization";
             TempData["IdOrg"] = id;
             var organization = _context.Organizations.Include(o => o.VolunteerUsers).FirstOrDefault(u => u.Id == id);
             ViewBag.MainVolunteer = _context.VolunteerUsers.FirstOrDefault(u => u.Id == organization.MainVolunteerId);
@@ -114,7 +114,7 @@ namespace Volunteer.Controllers
             return RedirectToAction("ViewAllInformationCompositionOrganization", new RouteValueDictionary { { "Id", organizationId } });
 
         }
-        public IActionResult RemoveVolunteersToOrganization(Guid organizationId, List<Guid> addlistUserId)
+        public IActionResult RemoveVolunteersFromOrganization(Guid organizationId, List<Guid> addlistUserId)
         {
             var updateOrg = _context.Organizations.Include(o => o.VolunteerUsers).FirstOrDefault(u => u.Id == organizationId);
             var currentVolunteers = updateOrg.VolunteerUsers.ToList();

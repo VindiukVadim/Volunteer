@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+    var MainSoldier = ViewBag.MainSoldier;
+}
+@model MilitaryUnit
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Склад військового підрозділу</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Командувач підрозділу: @MainSoldier.FirstName @MainSoldier.SecondName</h5>
+            @{
+                <button id="removeSoldier" data-myvalue="@Model.Id" data-bs-toggle="modal" data-bs-target="#RemoveModal" type="button" name="removeSoldier" class="btn btn-sm btn-danger" value="@Model.Id">Видалити військових</button>
+                <button id="addSoldier" data-myvalue="@Model.Id" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" name="addSoldier" class="btn btn-sm btn-danger" value="@Model.Id">Додати військових</button>
+                <p>Склад підрозділу</p>
+                foreach (var su in Model.SoldierUsers)
+                {
+                    if (su.Id == MainSoldier.Id)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        <input hidden type="" name="addlistUserId" id="addlistUserId" value="@su.Id" @(Model.SoldierUsers.Contains(su) ? "checked=\" checked\"" : "" ) />
+                        @su.FirstName @su.SecondName <br />
+                    }
+
+                }
+            }
+        </div>
+    </div>
+</div>
+@Html.Partial("_ModalAddVolunteer")
+@Html.Partial("_ModalRemoveVolunteer")

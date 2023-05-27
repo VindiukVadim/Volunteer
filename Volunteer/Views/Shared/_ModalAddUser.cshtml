@@ -1,14 +1,13 @@
 ﻿@{
-    var controller = TempData["ControllerRemove"];
-    var method = TempData["MethodRemove"];
-    var alllistVolunteer = ViewBag.ListOfVolunteer;
-    var currentVolunteer = ViewBag.CurrentVolonteer;
+    var controller = TempData["ControllerAdd"];
+    var method = TempData["MethodAdd"];
     var orgId = TempData["IdOrg"];
-    var MainVolunteer = ViewBag.MainVolunteer;
+    var alllistUser = ViewBag.ListOfUser;
+    var currentUser = ViewBag.CurrentUser;
 }
 
 
-<div class="modal fade" id="RemoveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,9 +15,9 @@
             <form method="post" asp-controller=@controller asp-action=@method>
                 <div class="modal-body">
 
-                    @foreach (var user in alllistVolunteer)
+                    @foreach (var user in alllistUser)
                     {
-                        if (!currentVolunteer.Contains(user) || user == MainVolunteer)
+                        if (currentUser.Contains(user))
                         {
                             continue;
                         }

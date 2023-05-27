@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@model Organization
+
+<h2>Редагування організації</h2>
+<hr>
+<form method="post" asp-asp-controller="Organization" asp-action="EditOrganization">
+    <input hidden value=@Model.Id asp-for=@Model.Id>
+    <label for="Name"></label>
+    <input id="Name" class="form-control" asp-for="Name">
+    <label for="Desc"></label>
+    <textarea id="Desc" class="form-control" asp-for="Description"></textarea>
+    <a type="button" class="btn btn-sm btn-warning" asp-controller="Organization" asp-action="ViewAllInformationCompositionOrganization" asp-route-id="@Model.Id">Склад організації</a>
+    <button type="submit" class="btn btn-success">Зберегти</button>
+</form>
+

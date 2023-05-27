@@ -13,5 +13,20 @@ namespace Volunteer.Data
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
         public DbSet<VolunteerUser> VolunteerUsers { get; set; }
+        public DbSet<SoldierUser> SoldierUsers { get; set; }    
+        public DbSet<Organization> Organizations { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Organization>()
+                .HasMany(o => o.VolunteerUsers)
+                .WithOne(u => u.Organization)
+                .HasForeignKey(u => u.OrganizationId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
+
     }
+
 }

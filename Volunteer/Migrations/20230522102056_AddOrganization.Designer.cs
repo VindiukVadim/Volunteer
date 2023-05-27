@@ -12,8 +12,8 @@ using Volunteer.Data;
 namespace Volunteer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230521133446_Init")]
-    partial class Init
+    [Migration("20230522102056_AddOrganization")]
+    partial class AddOrganization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,6 +238,46 @@ namespace Volunteer.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Volunteer.Models.Organization", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("MainVolunteerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Organizations");
+                });
+
+            modelBuilder.Entity("Volunteer.Models.SoldierUser", b =>
+                {
+                    b.HasBaseType("Volunteer.Models.ApplicationUser");
+
+                    b.Property<string>("About")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.HasDiscriminator().HasValue("SoldierUser");
+                });
+
             modelBuilder.Entity("Volunteer.Models.VolunteerUser", b =>
                 {
                     b.HasBaseType("Volunteer.Models.ApplicationUser");
@@ -252,6 +292,24 @@ namespace Volunteer.Migrations
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("OrganizationId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("AspNetUsers", t =>
+                        {
+                            t.Property("About")
+                                .HasColumnName("VolunteerUser_About");
+
+                            t.Property("City")
+                                .HasColumnName("VolunteerUser_City");
+
+                            t.Property("DateOfBirth")
+                                .HasColumnName("VolunteerUser_DateOfBirth");
+                        });
 
                     b.HasDiscriminator().HasValue("VolunteerUser");
                 });
@@ -305,6 +363,22 @@ namespace Volunteer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Volunteer.Models.VolunteerUser", b =>
+                {
+                    b.HasOne("Volunteer.Models.Organization", "Organization")
+                        .WithMany("VolunteerUsers")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Volunteer.Models.Organization", b =>
+                {
+                    b.Navigation("VolunteerUsers");
                 });
 #pragma warning restore 612, 618
         }

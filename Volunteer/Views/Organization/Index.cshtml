@@ -2,41 +2,44 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 @model List<Organization>
-<div class="row">
-    <div class="col-md-12">
-        <a href="/Organization/CreateOrganization" class="form control btn btn-success">Створити організацію</a>
+<form>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/Organization/CreateOrganization" class="form control btn btn-success">Створити організацію</a>
+        </div>
     </div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-md-12">
-        @if (Model.Any())
-        {
-            <table>
-                <thead>
-                    <tr>
-                        <td>Назва організації</td>
-                        <td>Опис</td>
-                        <td>Редагувати</td>
-                        <td>Видалити</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.Any())
+            {
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Description</td>
-                            <td><a class="btn btn-sm btn-warning" asp-controller="Organization" asp-action="EditOrganization" asp-route-id="@item.Id">Редагувати</a></td>
-                            <td><button id="delete" data-myvalue="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" name="id" class="btn btn-sm btn-danger" value=@item.Id>Видалити</button></td>
+                            <td>Назва організації</td>
+                            <td>Опис</td>
+                            <td>Редагувати</td>
+                            <td>Видалити</td>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        } else
-        {
-            <h2>Організацій не знайдено</h2>
-        }
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td><a class="btn btn-sm btn-warning" asp-controller="Organization" asp-action="EditOrganization" asp-route-id="@item.Id">Редагувати</a></td>
+                                <td><button id="delete" data-myvalue="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" name="id" class="btn btn-sm btn-danger" value=@item.Id>Видалити</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h2>Організацій не знайдено</h2>
+            }
+        </div>
     </div>
-</div>
-@Html.Partial("_ModalConfirmDelete")
+    @Html.Partial("_ModalConfirmDelete")
+</form>

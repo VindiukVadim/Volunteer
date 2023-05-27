@@ -1,13 +1,14 @@
 ﻿@{
-    var controller = TempData["ControllerAdd"];
-    var method = TempData["MethodAdd"];
+    var controller = TempData["ControllerRemove"];
+    var method = TempData["MethodRemove"];
     var alllistVolunteer = ViewBag.ListOfVolunteer;
     var currentVolunteer = ViewBag.CurrentVolonteer;
     var orgId = TempData["IdOrg"];
+    var MainVolunteer = ViewBag.MainVolunteer;
 }
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="RemoveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -17,7 +18,7 @@
 
                     @foreach (var user in alllistVolunteer)
                     {
-                        if (currentVolunteer.Contains(user))
+                        if (!currentVolunteer.Contains(user) || user == MainVolunteer)
                         {
                             continue;
                         }

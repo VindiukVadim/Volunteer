@@ -90,9 +90,9 @@ namespace Volunteer.Controllers
             TempData["MethodRemove"] = "RemoveVolunteersFromOrganization";
             TempData["IdOrg"] = id;
             var organization = _context.Organizations.Include(o => o.VolunteerUsers).FirstOrDefault(u => u.Id == id);
-            ViewBag.MainVolunteer = _context.VolunteerUsers.FirstOrDefault(u => u.Id == organization.MainVolunteerId);
-            ViewBag.ListOfVolunteer = _context.VolunteerUsers.ToList();
-            ViewBag.CurrentVolonteer = _context.VolunteerUsers.Where(u => u.OrganizationId == id).ToList();
+            ViewBag.MainUser = _context.VolunteerUsers.FirstOrDefault(u => u.Id == organization.MainVolunteerId);
+            ViewBag.ListOfUser = _context.VolunteerUsers.ToList();
+            ViewBag.CurrentUser = _context.VolunteerUsers.Where(u => u.OrganizationId == id).ToList();
 
             return View(organization);
         }

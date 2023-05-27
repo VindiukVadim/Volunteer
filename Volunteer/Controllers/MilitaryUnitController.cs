@@ -90,9 +90,9 @@ namespace Volunteer.Controllers
             TempData["MethodRemove"] = "RemoveSoldiersFromMilitaryUnit";
             TempData["IdUnit"] = id;
             var militaryUnit = _context.MilitaryUnits.Include(o => o.SoldierUsers).FirstOrDefault(u => u.Id == id);
-            ViewBag.MainSoldier = _context.SoldierUsers.FirstOrDefault(u => u.Id == militaryUnit.MainSoldierId);
-            ViewBag.ListOfSoldier = _context.SoldierUsers.ToList();
-            ViewBag.CurrentVolonteer = _context.SoldierUsers.Where(u => u.MilitaryUnitId == id).ToList();
+            ViewBag.MainUser = _context.SoldierUsers.FirstOrDefault(u => u.Id == militaryUnit.MainSoldierId);
+            ViewBag.ListOfUser = _context.SoldierUsers.ToList();
+            ViewBag.CurrentUser = _context.SoldierUsers.Where(u => u.MilitaryUnitId == id).ToList();
 
             return View(militaryUnit);
         }

@@ -36,12 +36,13 @@ namespace Volunteer.Controllers
             var administrator = User.Identity.Name;
             var adminID = _context.VolunteerUsers.FirstOrDefault(u => u.UserName == administrator);
 
-            var newOrg = new Organization();
-            newOrg.Name = organization.Name;
-            newOrg.Description= organization.Description;
-            newOrg.Id = Guid.NewGuid();
-            newOrg.MainVolunteerId = adminID.Id;
-            _context.Organizations.Add(newOrg);
+            var newUnit = new Organization();
+            newUnit.Name = organization.Name;
+            newUnit.Description = organization.Description;
+            newUnit.Id = Guid.NewGuid();
+            newUnit.MainVolunteerId = adminID.Id;
+            newUnit.VolunteerUsers = new List<VolunteerUser> { adminID };
+            _context.Organizations.Add(newUnit);
             _context.SaveChanges();
             return RedirectToAction("Index", "Organization");
         }
@@ -60,15 +61,15 @@ namespace Volunteer.Controllers
 
         public IActionResult EditOrganization(Guid id)
         {
-            TempData["Controller"] = "Organization";
-            TempData["Method"] = "EditOrganization";
+            TempData["Id"] = id;
             var organization = _context.Organizations.FirstOrDefault(o => o.Id == id);
             ViewBag.ListOfVolunteer = _context.VolunteerUsers.ToList();
+            ViewBag.CurrentVolunteer = _context.VolunteerUsers.Where(u => u.Organization.Id == id).ToList();
             return View(organization);
 
         }
         [HttpPost]
-        public IActionResult EditOrganization(Organization organization, List<Guid> addlistUserId)
+        public IActionResult EditOrganization(Organization organization)
         {
             var updateOrg = _context.Organizations.FirstOrDefault(o => o.Id == organization.Id);
             if (updateOrg != null)
@@ -130,20 +131,5 @@ namespace Volunteer.Controllers
             _context.SaveChanges();
             return RedirectToAction("ViewAllInformationCompositionOrganization", new RouteValueDictionary { { "Id", organizationId } });
         }
-
-        //public void AddVolunteersToOrganization(Organization organization, List<Guid> addlistUserId)
-        //{
-        //    var org = _context.Organizations.FirstOrDefault(o => o.Id == organization.Id);
-        //    if (organization == null)
-        //    {
-        //        var volunteerUsers = new List<VolunteerUser>();
-        //        foreach (var item in addlistUserId)
-        //        {
-        //            var newUser = _context.VolunteerUsers.FirstOrDefault(u => u.Id == item);
-        //            volunteerUsers.Add(newUser);
-        //        }
-        //        organization.VolunteerUsers = volunteerUsers;
-        //    }
-        //}
     }
 }

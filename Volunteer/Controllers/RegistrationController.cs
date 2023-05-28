@@ -21,6 +21,10 @@ namespace Volunteer.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+        public IActionResult SigIn() 
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> SigIn(ApplicationUser model, int role, string Password)

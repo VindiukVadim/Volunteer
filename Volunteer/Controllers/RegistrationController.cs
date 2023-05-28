@@ -21,6 +21,8 @@ namespace Volunteer.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+
+        [HttpPost]
         public async Task<IActionResult> SigIn(ApplicationUser model, int role, string Password)
         {
             if (model != null)

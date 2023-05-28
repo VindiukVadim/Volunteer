@@ -26,6 +26,12 @@ namespace Volunteer.Data
                 .WithOne(u => u.Organization)
                 .HasForeignKey(u => u.OrganizationId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<MilitaryUnit>()
+                .HasMany(o => o.SoldierUsers)
+                .WithOne(u => u.MilitaryUnit)
+                .HasForeignKey(u => u.MilitaryUnitId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
     }

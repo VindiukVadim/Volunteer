@@ -7,5 +7,6 @@
         public string Description { get; set; }
         public Guid MainSoldierId { get; set; }
         public List<SoldierUser>? SoldierUsers { get; set; }
+        public List<Order>? Orders { get; set; }       
     }
 }

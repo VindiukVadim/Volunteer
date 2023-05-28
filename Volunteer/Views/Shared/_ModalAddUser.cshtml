@@ -12,8 +12,8 @@
         <div class="modal-content">
             <div class="modal-header">
             </div>
-            <form method="post" asp-controller=@controller asp-action=@method>
-                <div class="modal-body">
+            <form method="post" asp-controller=@controller asp-action=@method style="justify-content:center; display:flex">
+            <div class="modal-body">
 
                     @foreach (var user in alllistUser)
                     {
@@ -33,10 +33,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
 
-                    <button id="comfirmAdd" type="submit" class="btn btn-danger" value="">Змінити</button>
+                
+                    <button id="comfirmAdd" type="submit" class="btn btn-danger" value="">Додати</button>
+                
 
-
-                </div>
+            </div>
             </form>
         </div>
     </div>

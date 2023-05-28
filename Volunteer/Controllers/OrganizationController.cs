@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Volunteer.Data;
 using Volunteer.Models;
 
@@ -12,7 +11,7 @@ namespace Volunteer.Controllers
 
         public OrganizationController(ApplicationDbContext context)
         {
-            _context = context;
+            _context= context;
         }
         public IActionResult Index()
         {
@@ -20,7 +19,7 @@ namespace Volunteer.Controllers
             TempData["Method"] = "RemoveOrganization";
             var administrator = User.Identity.Name;
             var adminID = _context.VolunteerUsers.FirstOrDefault(u => u.UserName == administrator);
-            var listOrg = _context.Organizations.Where(o => o.MainVolunteerId == adminID.Id).ToList();
+            var listOrg = _context.Organizations.Where(o=>o.MainVolunteerId == adminID.Id).ToList();
             return View(listOrg);
 
         }
@@ -39,10 +38,9 @@ namespace Volunteer.Controllers
 
             var newOrg = new Organization();
             newOrg.Name = organization.Name;
-            newOrg.Description = organization.Description;
+            newOrg.Description= organization.Description;
             newOrg.Id = Guid.NewGuid();
             newOrg.MainVolunteerId = adminID.Id;
-            newOrg.VolunteerUsers = new List<VolunteerUser> { adminID };
             _context.Organizations.Add(newOrg);
             _context.SaveChanges();
             return RedirectToAction("Index", "Organization");
@@ -62,15 +60,15 @@ namespace Volunteer.Controllers
 
         public IActionResult EditOrganization(Guid id)
         {
-            TempData["Id"] = id;
+            TempData["Controller"] = "Organization";
+            TempData["Method"] = "EditOrganization";
             var organization = _context.Organizations.FirstOrDefault(o => o.Id == id);
             ViewBag.ListOfVolunteer = _context.VolunteerUsers.ToList();
-            ViewBag.CurrentVolonteer = _context.VolunteerUsers.Where(u => u.OrganizationId == id).ToList();
             return View(organization);
 
         }
         [HttpPost]
-        public IActionResult EditOrganization(Organization organization)
+        public IActionResult EditOrganization(Organization organization, List<Guid> addlistUserId)
         {
             var updateOrg = _context.Organizations.FirstOrDefault(o => o.Id == organization.Id);
             if (updateOrg != null)
@@ -132,5 +130,20 @@ namespace Volunteer.Controllers
             _context.SaveChanges();
             return RedirectToAction("ViewAllInformationCompositionOrganization", new RouteValueDictionary { { "Id", organizationId } });
         }
+
+        //public void AddVolunteersToOrganization(Organization organization, List<Guid> addlistUserId)
+        //{
+        //    var org = _context.Organizations.FirstOrDefault(o => o.Id == organization.Id);
+        //    if (organization == null)
+        //    {
+        //        var volunteerUsers = new List<VolunteerUser>();
+        //        foreach (var item in addlistUserId)
+        //        {
+        //            var newUser = _context.VolunteerUsers.FirstOrDefault(u => u.Id == item);
+        //            volunteerUsers.Add(newUser);
+        //        }
+        //        organization.VolunteerUsers = volunteerUsers;
+        //    }
+        //}
     }
 }

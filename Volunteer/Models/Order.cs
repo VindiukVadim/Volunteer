@@ -10,9 +10,9 @@
         public DateTime EndDate { get; set; }
         public DateTime ExecutionDate { get; set;} 
         public int Status { get; set;}
-        public MilitaryUnit? MilitaryUnitId { get; set;}
+        public Guid? MilitaryUnitId { get; set;}
         public MilitaryUnit MilitaryUnits { get; set;}
-        public Organization? OrganizationId { get; set;}
+        public Guid? OrganizationId { get; set;}
         public Organization Organizations { get; set;}
     }
 }

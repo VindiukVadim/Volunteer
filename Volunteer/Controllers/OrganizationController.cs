@@ -57,7 +57,7 @@ namespace Volunteer.Controllers
                 _context.Organizations.Remove(organization);
                 _context.SaveChanges();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
         public IActionResult EditOrganization(Guid id)
